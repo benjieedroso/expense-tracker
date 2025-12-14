@@ -1,4 +1,5 @@
 import os
+from dotenv import load_dotenv
 from flask import Flask
 from sqlalchemy.orm import DeclarativeBase
 
@@ -11,13 +12,16 @@ from .expense_ns import expense_ns
 from .budget_ns import budget_ns
 from .summary import summary_ns
 
+load_dotenv()
+
+
 class Base(DeclarativeBase):
     pass
 
 
 def create_app():
     app = Flask(__name__)
-    app.config["SQLALCHEMY_DATABASE_URI"] = "postgresql://postgres:3dr0s0**@expense-tracker.cz24uwes6ifp.ap-southeast-2.rds.amazonaws.com:5432/postgres"
+    app.config["SQLALCHEMY_DATABASE_URI"] = os.getenv("SQLALCHEMY_DATABASE_URI")
 
     db.init_app(app)
 
